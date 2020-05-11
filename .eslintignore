@@ -1,0 +1,16 @@
+/node_modules
+/public
+
+package-lock.json
+README.md
+
+src/serviceWorker.js
+src/setupTest.js
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.json
+.eslintrc.js
+
+src/utils/
