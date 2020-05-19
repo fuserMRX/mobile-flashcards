@@ -13,4 +13,6 @@ yarn-error.log*
 *.json
 .eslintrc.js
 
+web-build/register-service-worker.js
+
 src/utils/
