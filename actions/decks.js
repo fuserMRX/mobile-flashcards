@@ -22,7 +22,7 @@ export const handleSaveDeck = (deck) => {
     return (dispatch) => {
         saveDeckTitle(deck)
             .then(saveResult => {
-                if(saveResult === 'success'){
+                if (saveResult === 'success') {
                     dispatch(saveDeck(deck));
                 }
             })

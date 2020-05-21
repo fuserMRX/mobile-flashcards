@@ -6,10 +6,10 @@ import { StyleSheet } from 'react-native';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 
 // Local Import
-import DeckListView from '../components/DecksListView';
+import DecksListView from '../components/DecksListView';
 import DeckView from '../components/DeckView';
 import AddDeckForm from '../components/AddDeckForm';
-import { purple, white } from '../utils/colors';
+import { purple, white, standardPurple } from '../utils/colors';
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -22,7 +22,7 @@ const TabNavigation = () => {
                 showIcon: true,
                 style: styles.navigation,
                 pressColor: purple,
-                activeTintColor: purple,
+                activeTintColor: standardPurple,
                 indicatorStyle: {
                     backgroundColor: purple
                 }
@@ -33,7 +33,7 @@ const TabNavigation = () => {
                     tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />,
                     tabBarLabel: 'Decks',
                 }}
-                name="Decks" component={DeckListView} />
+                name="Decks" component={DecksListView} />
 
             <Tab.Screen
                 options={{
@@ -70,6 +70,7 @@ const StackTabNavigation = () => {
 
 const styles = StyleSheet.create({
     navigation: {
+        top: 30,
         height: 70,
         shadowColor: 'rgba(0, 0, 0, 0.24)',
         shadowOffset: {

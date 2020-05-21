@@ -1,4 +1,5 @@
 export const purple = '#ff6bf0';
+export const standardPurple = 'purple';
 export const gray = '#757575';
 export const white = '#fff';
 export const red = '#b71845';
