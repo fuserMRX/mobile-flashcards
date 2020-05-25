@@ -6,6 +6,7 @@ export const getDecks = async (itemId) => {
     try {
         const decks = await AsyncStorage.getItem(itemId);
         return JSON.parse(decks);
+        // return {}; //debugging purposes case
     } catch (e) {
         console.error(e);
     }
@@ -40,7 +41,7 @@ export const saveDeckTitle = async (title) => {
                 questions: []
             }
         };
-        // await AsyncStorage.clear();
+        // await AsyncStorage.clear(); //- debugginn purpose
         const decks = JSON.parse(await AsyncStorage.getItem(DECKS_STORAGE_KEY));
         if (decks) {
             updatedDecksObj = {

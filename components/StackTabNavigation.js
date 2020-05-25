@@ -3,7 +3,9 @@ import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet } from 'react-native';
-import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { FontAwesome5, AntDesign } from '@expo/vector-icons';
+import Constants from 'expo-constants';
+import { TransitionPresets } from '@react-navigation/stack';
 
 // Local Import
 import DecksListView from '../components/DecksListView';
@@ -30,7 +32,7 @@ const TabNavigation = () => {
         >
             <Tab.Screen
                 options={{
-                    tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />,
+                    tabBarIcon: ({ tintColor }) => <AntDesign name="copy1" size={30} color={tintColor} />,
                     tabBarLabel: 'Decks',
                 }}
                 name="Decks" component={DecksListView} />
@@ -59,7 +61,8 @@ const StackTabNavigation = () => {
                     headerTintColor: white,
                     headerStyle: {
                         backgroundColor: purple
-                    }
+                    },
+                    ...TransitionPresets.ModalSlideFromBottomIOS
                 }}
                 name="Deck"
                 component={DeckView} />
@@ -70,7 +73,7 @@ const StackTabNavigation = () => {
 
 const styles = StyleSheet.create({
     navigation: {
-        top: 30,
+        marginTop: Constants.statusBarHeight,
         height: 70,
         shadowColor: 'rgba(0, 0, 0, 0.24)',
         shadowOffset: {
