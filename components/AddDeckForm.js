@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, View, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { FontAwesome5, AntDesign } from '@expo/vector-icons';
-import { Input, Button } from 'react-native-elements';
+import { Input, Button, Text } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 // Local Import
@@ -12,14 +12,15 @@ class AddDeckForm extends Component {
 
     state = {
         deckTitle: '',
-        error: false
+        error: '',
+        loading: false
     };
 
     handleChange = (value) => {
         const deckTitle = value;
         this.setState(() => ({
             deckTitle,
-            error: false
+            error: ''
         }));
     };
 
@@ -29,27 +30,40 @@ class AddDeckForm extends Component {
 
     handleSubmit = () => {
         const title = this.state.deckTitle;
+        const errorText = 'ENTER A TITLE PLEASE';
         if (!title) {
             this.setState(() => ({
-                error: true
+                error: errorText
             }));
             return;
         }
-        this.props.dispatch(handleSaveDeck(title));
         this.setState(() => ({
-            deckTitle: ''
+            loading: true
         }));
-        this.toDeckView(title);
+        this.props.dispatch(handleSaveDeck(title))
+            .then((promiseResult) => {
+                if (promiseResult !== 'success') {
+                    return this.setState(() => ({
+                        error: promiseResult,
+                        loading: false
+                    }));
+                }
+                this.setState(() => ({
+                    deckTitle: '',
+                    loading: false
+                }));
+                this.toDeckView(title);
+            });
     };
 
     render() {
         const title = 'What is the title of your new Deck?';
-        const errorMessage = this.state.error ? 'ENTER A TITLE PLEASE' : '';
+        const errorMessage = this.state.error;
         return (
             // Dismiss keyboard when user touches outside the component
             <TouchableWithoutFeedback style={{ flex: 1 }} onPress={(Keyboard.dismiss)} accessible={false}>
                 <View style={styles.container}>
-                    <Text>{title}</Text>
+                    <Text style={styles.text}>{title}</Text>
                     <Input
                         placeholder="Enter Deck Title"
                         leftIcon={<AntDesign name="iconfontdesktop" size={24} color="black" />}
@@ -66,6 +80,7 @@ class AddDeckForm extends Component {
                         type="outline"
                         titleStyle={styles.title}
                         onPress={this.handleSubmit}
+                        loading={this.state.loading}
                     />
                 </View>
             </TouchableWithoutFeedback>
@@ -83,6 +98,10 @@ const styles = StyleSheet.create({
     },
     title: {
         color: standardPurple
+    },
+    text: {
+        fontWeight: 'bold',
+        fontSize: 15
     }
 });
 

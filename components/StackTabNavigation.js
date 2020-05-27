@@ -62,7 +62,7 @@ const StackTabNavigation = () => {
                     headerStyle: {
                         backgroundColor: purple
                     },
-                    ...TransitionPresets.ModalSlideFromBottomIOS
+                    ...TransitionPresets.SlideFromRightIOS
                 }}
                 name="Deck"
                 component={DeckView} />

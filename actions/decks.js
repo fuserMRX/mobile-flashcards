@@ -19,13 +19,15 @@ export const saveDeck = (deck) => {
 
 
 export const handleSaveDeck = (deck) => {
-    return (dispatch) => {
-        saveDeckTitle(deck)
-            .then(saveResult => {
-                if (saveResult === 'success') {
-                    dispatch(saveDeck(deck));
-                }
-            })
-            .catch(e => console.error(e));
+    return async (dispatch) => {
+        try {
+            const saveResult = await saveDeckTitle(deck);
+            if (saveResult === 'success') {
+                dispatch(saveDeck(deck));
+            }
+            return saveResult;
+        } catch (e) {
+            console.error(e);
+        }
     };
 };

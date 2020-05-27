@@ -41,8 +41,16 @@ export const saveDeckTitle = async (title) => {
                 questions: []
             }
         };
-        // await AsyncStorage.clear(); //- debugginn purpose
+        // await AsyncStorage.clear(); //- debugging purpose
         const decks = JSON.parse(await AsyncStorage.getItem(DECKS_STORAGE_KEY));
+
+        // Case for handling exsiting Deck
+        const titleExists = !!decks[title];
+        if (titleExists) {
+            // eslint-disable-next-line quotes
+            return result = `Sorry you've already had such deck - please enter another title`;
+        }
+
         if (decks) {
             updatedDecksObj = {
                 ...decks,
