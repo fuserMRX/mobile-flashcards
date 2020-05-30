@@ -1,14 +1,23 @@
-import React, { useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { Button } from 'react-native-elements';
+import { Button, Text, Avatar } from 'react-native-elements';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
+import Ripple from 'react-native-material-ripple';
 
 
 // Local Import
-import { standardPurple } from '../utils/colors';
+import { standardPurple, purple } from '../utils/colors';
+import { CARDIMAGE } from '../src/image';
+import { handleDeleteDeck } from '../actions/decks';
 
 const DeckView = (props) => {
+
+    const [loading, changeLoading] = useState(false);
+
+    useEffect(() => {
+        setTitle(props.deckId);
+    });
 
     const currentDeck = props.currentDeck;
 
@@ -20,27 +29,79 @@ const DeckView = (props) => {
         });
     };
 
-    useEffect(() => {
-        setTitle(props.deckId);
-    });
+    const deleteDeck = () => {
+        changeLoading(true);
+        const { dispatch, deckId, navigation } = props;
+        dispatch(handleDeleteDeck(deckId))
+            .then(() => {
+                changeLoading(false);
+                navigation.navigate('Decks');
+            })
+            .catch((e) => console.error(e));
+    };
+
+    const addCard = () => {
+        changeLoading(true);
+        const { dispatch, deckId, navigation } = props;
+        dispatch(handleDeleteDeck(deckId))
+            .then(() => {
+                changeLoading(false);
+                navigation.navigate('Decks');
+            })
+            .catch((e) => console.error(e));
+    };
 
     return (
         <View style={styles.container}>
-            <Text>{props.deckId}</Text>
-            <Text>{currentDeck && currentDeck.questions.length} cards</Text>
-            <Button
-                icon={
-                    <FontAwesome name="plus" size={24} color="white" />
-                }
-                title="Add card"
-                type="outline"
-            />
-            <Button
-                icon={
-                    <Entypo name="emoji-happy" size={24} color="white" />
-                }
-                title="Start Quiz"
-            />
+            <View style={styles.header}>
+                <Ripple>
+                    <Text h3 style={styles.text}>{props.deckId}</Text>
+                </Ripple>
+                <Ripple>
+                    <Text h4 style={styles.text}>{currentDeck && currentDeck.questions.length} cards</Text>
+                </Ripple>
+            </View>
+            <View style={styles.avatar}>
+                <TouchableOpacity>
+                    <Avatar
+                        rounded
+                        size="large"
+                        source={CARDIMAGE}
+                    />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.content}>
+                <Button
+                    icon={
+                        <FontAwesome name="plus" size={24} color={purple} />
+                    }
+                    title="Add card"
+                    titleStyle={[styles.buttonTitle, { color: standardPurple }]}
+                    type="outline"
+                    buttonStyle={styles.addButton}
+                    onPress={addCard}
+                    loading={loading}
+                    loadingProps={styles.loadingBar}
+                />
+                <Button
+                    icon={
+                        <Entypo name="emoji-happy" size={24} color={purple} />
+                    }
+                    title="Start Quiz"
+                    titleStyle={styles.buttonTitle}
+                    buttonStyle={styles.button}
+                />
+                <Button
+                    icon={
+                        <FontAwesome name="minus" size={24} color={standardPurple} />
+                    }
+                    title="Remove Card"
+                    titleStyle={[styles.buttonTitle]}
+                    buttonStyle={[styles.button, { backgroundColor: purple }]}
+                    onPress={deleteDeck}
+                    loading={loading}
+                />
+            </View>
         </View>
     );
 };
@@ -53,7 +114,37 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     button: {
-        color: standardPurple
+        backgroundColor: standardPurple,
+        width: 250
+    },
+    addButton: {
+        width: 250,
+    },
+    header: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    content: {
+        flex: 1,
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    text: {
+        textShadowColor: purple,
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 7,
+    },
+    buttonTitle: {
+        left: 10
+    },
+    avatar: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    loadingBar: {
+        color: purple
     }
 });
 

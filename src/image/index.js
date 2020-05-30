@@ -1,0 +1,1 @@
+export const CARDIMAGE = require('./card.jpg');

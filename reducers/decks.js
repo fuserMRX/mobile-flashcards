@@ -1,5 +1,5 @@
 import { RECEIVE_DECKS } from '../actions/decks';
-import { SAVE_DECK } from '../actions/decks';
+import { SAVE_DECK, DELETE_DECK } from '../actions/decks';
 
 
 const decks = (state = {}, action) => {
@@ -17,6 +17,14 @@ const decks = (state = {}, action) => {
                     questions: []
                 }
             };
+        case DELETE_DECK: {
+            const newState = { ...state };
+            delete newState[action.deck];
+
+            return {
+                ...newState
+            };
+        }
         default:
             return state;
     }

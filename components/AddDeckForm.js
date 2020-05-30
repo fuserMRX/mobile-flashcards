@@ -5,7 +5,7 @@ import { Input, Button, Text } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 // Local Import
-import { standardPurple } from '../utils/colors';
+import { standardPurple, purple } from '../utils/colors';
 import { handleSaveDeck } from '../actions/decks';
 
 class AddDeckForm extends Component {
@@ -71,6 +71,8 @@ class AddDeckForm extends Component {
                         value={this.state.deckTitle}
                         errorStyle={{ color: 'red' }}
                         errorMessage={errorMessage}
+                        inputStyle={styles.inputStyle}
+                        selectionColor={purple}
                     />
                     <Button
                         icon={
@@ -81,6 +83,8 @@ class AddDeckForm extends Component {
                         titleStyle={styles.title}
                         onPress={this.handleSubmit}
                         loading={this.state.loading}
+                        loadingProps={styles.loadingBar}
+                        buttonStyle={styles.button}
                     />
                 </View>
             </TouchableWithoutFeedback>
@@ -97,11 +101,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     title: {
-        color: standardPurple
+        color: standardPurple,
+        left: 10
     },
     text: {
-        fontWeight: 'bold',
-        fontSize: 15
+        textShadowColor: purple,
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 7,
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    loadingBar: {
+        color: purple,
+    },
+    inputStyle: {
+        color: standardPurple
+    },
+    button: {
+        width: 250
     }
 });
 

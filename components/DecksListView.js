@@ -5,6 +5,7 @@ import { Text } from 'react-native-elements';
 import { Card, ListItem, Button } from 'react-native-elements';
 import TouchableScale from 'react-native-touchable-scale';
 import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import Ripple from 'react-native-material-ripple';
 
 // Local Import
 import { purple, standardPurple} from '../utils/colors';
@@ -34,12 +35,12 @@ const DecksListView = (props) => {
                 <ListItem
                     title={
                         <View style={styles.flatList}>
-                            <Text style={styles.text} h3>{item.title}</Text>
+                            <Text style={styles.text} h4>{item.title}</Text>
                         </View>
                     }
                     subtitle={
                         <View style={styles.flatList}>
-                            <Text style={styles.text} h4>
+                            <Text style={styles.text}>
                                 {`${item.questions.length} ${(item.questions.length === 1) ? 'card' : 'cards'}`}
                             </Text>
                         </View>
@@ -67,8 +68,10 @@ const DecksListView = (props) => {
                     />
                 </View> :
                 <View style={styles.noDecks}>
-                    <Text style={styles.noDecksText}>{noDeckText}</Text>
-                    <MaterialCommunityIcons name="emoticon-wink-outline" style={[styles.noDecksText, {fontSize: 60}]}/>
+                    <Ripple>
+                        <Text style={styles.noDecksText}>{noDeckText}</Text>
+                        <MaterialCommunityIcons name="emoticon-wink-outline" style={[styles.noDecksText, {fontSize: 60}]}/>
+                    </Ripple>
                     <Button
                         icon={
                             <FontAwesome5 name="arrow-alt-circle-right" size={24} color={standardPurple} />
@@ -102,7 +105,8 @@ const styles = StyleSheet.create({
     text: {
         textShadowColor: purple,
         textShadowOffset: {width: -1, height: 1},
-        textShadowRadius: 7
+        textShadowRadius: 7,
+        fontSize: 25
     },
     badgeText: {
         color: standardPurple,
