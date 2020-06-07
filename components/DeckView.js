@@ -13,7 +13,11 @@ import { handleDeleteDeck } from '../actions/decks';
 
 const DeckView = (props) => {
 
-    const [loading, changeLoading] = useState(false);
+    const [loading, changeLoading] = useState({
+        button1: false,
+        button2: false,
+        button3: false
+    });
 
     useEffect(() => {
         setTitle(props.deckId);
@@ -29,26 +33,36 @@ const DeckView = (props) => {
         });
     };
 
+    const numberOfQuesitons = currentDeck.questions.length;
+
     const deleteDeck = () => {
-        changeLoading(true);
+        changeLoading(prevState => ({
+            ...prevState,
+            button3: true
+        }));
         const { dispatch, deckId, navigation } = props;
         dispatch(handleDeleteDeck(deckId))
             .then(() => {
-                changeLoading(false);
+                changeLoading(prevState => ({
+                    ...prevState,
+                    button3: false
+                }));
                 navigation.navigate('Decks');
             })
             .catch((e) => console.error(e));
     };
 
-    const addCard = () => {
-        changeLoading(true);
-        const { dispatch, deckId, navigation } = props;
-        dispatch(handleDeleteDeck(deckId))
-            .then(() => {
-                changeLoading(false);
-                navigation.navigate('Decks');
-            })
-            .catch((e) => console.error(e));
+    const goToCardForm = () => {
+        changeLoading(prevState => ({
+            ...prevState,
+            button1: true
+        }));
+        const { navigation, deckId } = props;
+        navigation.navigate('AddCard', { deckId });
+        changeLoading(prevState => ({
+            ...prevState,
+            button1: false
+        }));
     };
 
     return (
@@ -58,7 +72,7 @@ const DeckView = (props) => {
                     <Text h3 style={styles.text}>{props.deckId}</Text>
                 </Ripple>
                 <Ripple>
-                    <Text h4 style={styles.text}>{currentDeck && currentDeck.questions.length} cards</Text>
+                    <Text h4 style={styles.text}>{currentDeck && `${numberOfQuesitons} ${(numberOfQuesitons === 1) ? 'card' : 'cards'}`}</Text>
                 </Ripple>
             </View>
             <View style={styles.avatar}>
@@ -79,10 +93,11 @@ const DeckView = (props) => {
                     titleStyle={[styles.buttonTitle, { color: standardPurple }]}
                     type="outline"
                     buttonStyle={styles.addButton}
-                    onPress={addCard}
-                    loading={loading}
+                    onPress={goToCardForm}
+                    loading={loading.button1}
                     loadingProps={styles.loadingBar}
                 />
+
                 <Button
                     icon={
                         <Entypo name="emoji-happy" size={24} color={purple} />
@@ -90,6 +105,8 @@ const DeckView = (props) => {
                     title="Start Quiz"
                     titleStyle={styles.buttonTitle}
                     buttonStyle={styles.button}
+                    loading={loading.button2}
+                    loadingProps={styles.loadingBar}
                 />
                 <Button
                     icon={
@@ -99,7 +116,7 @@ const DeckView = (props) => {
                     titleStyle={[styles.buttonTitle]}
                     buttonStyle={[styles.button, { backgroundColor: purple }]}
                     onPress={deleteDeck}
-                    loading={loading}
+                    loading={loading.button3}
                 />
             </View>
         </View>

@@ -11,6 +11,7 @@ import { TransitionPresets } from '@react-navigation/stack';
 import DecksListView from '../components/DecksListView';
 import DeckView from '../components/DeckView';
 import AddDeckForm from '../components/AddDeckForm';
+import AddCardForm from '../components/AddCardForm';
 import { purple, white, standardPurple } from '../utils/colors';
 
 
@@ -66,6 +67,16 @@ const StackTabNavigation = () => {
                 }}
                 name="Deck"
                 component={DeckView} />
+            <StackNavigator.Screen
+                options={{
+                    headerTintColor: white,
+                    headerStyle: {
+                        backgroundColor: purple
+                    },
+                    ...TransitionPresets.ModalSlideFromBottomIOS
+                }}
+                name="AddCard"
+                component={AddCardForm} />
         </StackNavigator.Navigator>
     );
 };

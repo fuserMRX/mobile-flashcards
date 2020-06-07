@@ -1,5 +1,5 @@
 import { RECEIVE_DECKS } from '../actions/decks';
-import { SAVE_DECK, DELETE_DECK } from '../actions/decks';
+import { SAVE_DECK, DELETE_DECK, ADD_CARD } from '../actions/decks';
 
 
 const decks = (state = {}, action) => {
@@ -25,6 +25,14 @@ const decks = (state = {}, action) => {
                 ...newState
             };
         }
+        case ADD_CARD:
+            return {
+                ...state,
+                [action.deck]: {
+                    ...state[action.deck],
+                    questions: state[action.deck].questions.concat([action.card])
+                }
+            };
         default:
             return state;
     }

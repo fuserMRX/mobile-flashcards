@@ -30,7 +30,7 @@ export const getDeck = (id) => {
         });
 };
 
-//take in a single title argument and add it to the decks.
+
 export const saveDeckTitle = async (title) => {
     try {
         let result = null;
@@ -97,21 +97,28 @@ export const removeDeck = async (title) => {
     }
 };
 
-// TODO should finished
-//take in two arguments, title and card, and will add
-//the card to the list of questions for the deck with
-//the associated title.
 export const addCardToDeck = async (title, card) => {
     try {
-        const decks = await AsyncStorage.getItem(DECKS_STORAGE_KEY);
+        let result = null;
+        const decks = JSON.parse(await AsyncStorage.getItem(DECKS_STORAGE_KEY));
+
         const updatedDecks = {
             ...decks,
             [title]: {
                 ...decks[title],
-                questions: card
+                questions: decks[title].questions.concat([card])
             }
         };
-        await AsyncStorage.setItem(DECKS_STORAGE_KEY, updatedDecks);
+
+        await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(updatedDecks), (err) => {
+            if (err) {
+                console.log(err);
+                result = err;
+            }
+            console.log('Deck has been added successfully');
+            result = 'success';
+        });
+        return result;
     } catch (e) {
         console.log(e);
     }
