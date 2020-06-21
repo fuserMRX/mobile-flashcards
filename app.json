@@ -1,10 +1,22 @@
 {
-  "name": "mobile-flashcards",
-  "displayName": "mobile-flashcards",
+  "name": "MobileFlashCards",
+  "displayName": "MobileFlashCards",
   "expo": {
-    "name": "mobile-flashcards",
-    "slug": "mobile-flashcards",
+    "name": "MobileFlashCards",
+    "slug": "MobileFlashCards",
+    "description": "mobile-flashcards",
     "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/image/mbfcards.png",
+    "notification": {
+      "icon": "./src/image/mbfcards.png"
+    },
+    "ios": {
+      "bundleIdentifier": "org.myflashcards.exp"
+    },
+    "android": {
+      "package": "org.myflashcards.exp"
+    },
     "platforms": [
       "ios",
       "android",

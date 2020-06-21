@@ -14,9 +14,11 @@ In the project directory, then:
 
 Runs the app in the development mode.
 
-Expo DevTools is ususally running at http://localhost:19002
-To open app on real android or emulator please press `a` on keyboard
-App was tested on OnePlus 7 Pro - Android 10
+Expo DevTools is ususally running at http://localhost:19002.
+To open app on real android or emulator please press `a` on keyboard.
+App was tested on OnePlus 7 Pro - Android 10.
+
+to build apk file - use `expo build:android`
 
 ### Additional features
 
