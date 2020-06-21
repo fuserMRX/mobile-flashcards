@@ -1,4 +1,6 @@
 export const purple = '#ff6bf0';
+export const purpleAnswer = '#e28aff';
+export const purpleQuestion = '#faa0f7';
 export const standardPurple = 'purple';
 export const gray = '#757575';
 export const white = '#fff';

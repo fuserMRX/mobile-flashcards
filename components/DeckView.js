@@ -7,7 +7,7 @@ import Ripple from 'react-native-material-ripple';
 
 
 // Local Import
-import { standardPurple, purple } from '../utils/colors';
+import { standardPurple, purple, red } from '../utils/colors';
 import { CARDIMAGE } from '../src/image';
 import { handleDeleteDeck } from '../actions/decks';
 
@@ -16,8 +16,12 @@ const DeckView = (props) => {
     const [loading, changeLoading] = useState({
         button1: false,
         button2: false,
-        button3: false
+        button3: false,
     });
+
+    const [errorNoCards, changeErrorState] = useState(false);
+    const errorNoCardsText = `Sorry, you cannot take a quiz because
+    there are no cards in the '${props.deckId}'`;
 
     useEffect(() => {
         setTitle(props.deckId);
@@ -33,7 +37,7 @@ const DeckView = (props) => {
         });
     };
 
-    const numberOfQuesitons = currentDeck.questions.length;
+    const numberOfQuesitons = currentDeck && currentDeck.questions.length;
 
     const deleteDeck = () => {
         changeLoading(prevState => ({
@@ -53,6 +57,7 @@ const DeckView = (props) => {
     };
 
     const goToCardForm = () => {
+        changeErrorState(false);
         changeLoading(prevState => ({
             ...prevState,
             button1: true
@@ -63,6 +68,14 @@ const DeckView = (props) => {
             ...prevState,
             button1: false
         }));
+    };
+
+    const goToQuiz = () => {
+        if (!numberOfQuesitons) {
+            return changeErrorState(true);
+        }
+        const { navigation, deckId } = props;
+        navigation.navigate('Quiz', { deckId });
     };
 
     return (
@@ -97,7 +110,6 @@ const DeckView = (props) => {
                     loading={loading.button1}
                     loadingProps={styles.loadingBar}
                 />
-
                 <Button
                     icon={
                         <Entypo name="emoji-happy" size={24} color={purple} />
@@ -106,8 +118,10 @@ const DeckView = (props) => {
                     titleStyle={styles.buttonTitle}
                     buttonStyle={styles.button}
                     loading={loading.button2}
+                    onPress={goToQuiz}
                     loadingProps={styles.loadingBar}
                 />
+                {errorNoCards && <Text style={styles.errorText}>{errorNoCardsText}</Text>}
                 <Button
                     icon={
                         <FontAwesome name="minus" size={24} color={standardPurple} />
@@ -162,6 +176,9 @@ const styles = StyleSheet.create({
     },
     loadingBar: {
         color: purple
+    },
+    errorText: {
+        color: red
     }
 });
 

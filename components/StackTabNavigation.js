@@ -12,6 +12,7 @@ import DecksListView from '../components/DecksListView';
 import DeckView from '../components/DeckView';
 import AddDeckForm from '../components/AddDeckForm';
 import AddCardForm from '../components/AddCardForm';
+import QuizView from '../components/QuizView';
 import { purple, white, standardPurple } from '../utils/colors';
 
 
@@ -77,6 +78,16 @@ const StackTabNavigation = () => {
                 }}
                 name="AddCard"
                 component={AddCardForm} />
+            <StackNavigator.Screen
+                options={{
+                    headerTintColor: white,
+                    headerStyle: {
+                        backgroundColor: purple
+                    },
+                    ...TransitionPresets.RevealFromBottomAndroid
+                }}
+                name="Quiz"
+                component={QuizView} />
         </StackNavigator.Navigator>
     );
 };
