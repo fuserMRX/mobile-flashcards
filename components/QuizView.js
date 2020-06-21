@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 // Local Import
 import QuizResults from './QuizResults';
 import CardView from './CardView';
+import { setLocalNotification } from '../utils/helpers';
 
 const QuizView = (props) => {
     const cards = props.currentDeck.questions;
@@ -27,8 +28,10 @@ const QuizView = (props) => {
             // Switch to the next card in the deck
             setNextCard(cards[currentIndex + 1]);
         } else {
-            // Switch to QuizResults in case we have no more cars in the deck
+            // Switch to QuizResults in case we have no more cards in the deck
             setNextCard(null);
+            // set up notification for the next day if the quiz is passed
+            setLocalNotification(true);
         }
     };
 

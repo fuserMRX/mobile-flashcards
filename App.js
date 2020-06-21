@@ -7,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // Local Import
 import { standardPurple } from './utils/colors';
+import { setLocalNotification } from './utils/helpers';
 import StackTabNavigation from './components/StackTabNavigation';
 import MobileCardStatusBar from './components/MobileCardStatusBar';
 
@@ -17,6 +18,7 @@ class App extends React.Component {
 
     componentDidMount() {
         const { dispatch } = this.props;
+        setLocalNotification();
         dispatch(handleInitialData())
             .then(() => {
                 this.setState(() => ({

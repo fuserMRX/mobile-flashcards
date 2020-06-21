@@ -12,25 +12,6 @@ export const getDecks = async (itemId) => {
     }
 };
 
-// TODO should be finished
-//take in a single id argument and return
-//the deck associated with that id.
-export const getDeck = (id) => {
-    AsyncStorage.getItem(DECKS_STORAGE_KEY)
-        .then(JSON.parse)
-        .then((data) => {
-            if (data !== null && data[id]) {
-                return data[id];
-            } else {
-                return 'No Decks are found with such ID';
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-};
-
-
 export const saveDeckTitle = async (title) => {
     try {
         let result = null;

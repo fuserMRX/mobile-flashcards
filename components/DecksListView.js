@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { Text } from 'react-native-elements';
-import { Card, ListItem, Button } from 'react-native-elements';
+import { Card, ListItem, Button, Tile } from 'react-native-elements';
 import TouchableScale from 'react-native-touchable-scale';
 import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
-import Ripple from 'react-native-material-ripple';
 
 // Local Import
-import { purple, standardPurple} from '../utils/colors';
+import { purple, standardPurple } from '../utils/colors';
+import { TUMBLEWEEDIMAGE } from '../src/image';
 
 
 const DecksListView = (props) => {
@@ -60,28 +60,38 @@ const DecksListView = (props) => {
     return (
         <>
             {(props.decks.length > 0) ?
-                <View style={(props.decks.length === 1) ? styles.container : { flex: 1 }}>
+                <View style={(props.decks.length === 1) ? styles.containerWithCard : { flex: 1 }}>
                     <FlatList
                         keyExtractor={item => item.title}
                         data={props.decks}
                         renderItem={renderDeck}
                     />
                 </View> :
-                <View style={styles.noDecks}>
-                    <Ripple>
-                        <Text style={styles.noDecksText}>{noDeckText}</Text>
-                        <MaterialCommunityIcons name="emoticon-wink-outline" style={[styles.noDecksText, {fontSize: 60}]}/>
-                    </Ripple>
-                    <Button
-                        icon={
-                            <FontAwesome5 name="arrow-alt-circle-right" size={24} color={standardPurple} />
-                        }
-                        title="Go to Deck Creation"
-                        type="outline"
-                        iconRight
-                        titleStyle={styles.buttonTitle}
-                        onPress={goToAddDeck}
-                    />
+                <View style={styles.container}>
+                    <View style={styles.container}>
+                        <Tile
+                            imageSrc={TUMBLEWEEDIMAGE}
+                            title=''
+                            featured
+                            caption=''
+                        />
+                    </View>
+                    <View style={styles.container}>
+                        <Text style={styles.noDecksText}>{noDeckText}
+
+                        </Text>
+                        <MaterialCommunityIcons name="emoticon-wink-outline" style={[styles.noDecksTextWink, { fontSize: 30 }]} />
+                        <Button
+                            icon={
+                                <FontAwesome5 name="arrow-alt-circle-right" size={24} color={standardPurple} />
+                            }
+                            title="Go to Deck Creation"
+                            type="outline"
+                            iconRight
+                            titleStyle={styles.buttonTitle}
+                            onPress={goToAddDeck}
+                        />
+                    </View>
                 </View>
             }
         </>
@@ -95,16 +105,21 @@ const mapStateToProps = ({ decks }) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
+    containerWithCard: {
         flex: 1,
         top: 250
+    },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-evenly'
     },
     flatList: {
         alignItems: 'center'
     },
     text: {
         textShadowColor: purple,
-        textShadowOffset: {width: -1, height: 1},
+        textShadowOffset: { width: -1, height: 1 },
         textShadowRadius: 7,
         fontSize: 25
     },
@@ -128,17 +143,22 @@ const styles = StyleSheet.create({
     noDecksText: {
         textAlign: 'center',
         textShadowColor: purple,
-        textShadowOffset: {width: -1, height: 1},
+        textShadowOffset: { width: -1, height: 1 },
         textShadowRadius: 7,
         fontSize: 25,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: 'black'
     },
     buttonTitle: {
         color: standardPurple,
         textShadowColor: purple,
-        textShadowOffset: {width: -1, height: 1},
+        textShadowOffset: { width: -1, height: 1 },
         textShadowRadius: 7,
-    }
+    },
+    image: {
+        width: 300,
+        height: 300
+    },
 });
 
 
