@@ -14,9 +14,14 @@ const CardView = (props) => {
 
     let currentAnimatedValue = 0;
 
-    const animatedValue = new Animated.Value(0);
+    let animatedValue = new Animated.Value(0);
     // Save value between re-render of the hook 'useState' by using useRef hook
-    const animatedValueRef = useRef(animatedValue);
+    let animatedValueRef = useRef(animatedValue);
+
+    const restoreDefaultFlipCardState = () => {
+        changeButtonState(true);
+        animatedValueRef.current.setValue(0);
+    };
 
     animatedValueRef.current.addListener(({ value }) => {
         currentAnimatedValue = value;
@@ -93,7 +98,7 @@ const CardView = (props) => {
                     title="Correct"
                     raised
                     titleStyle={styles.buttonTitle}
-                    onPress={() => props.goToNextQuestion('correct')}
+                    onPress={() => {props.goToNextQuestion('correct'); restoreDefaultFlipCardState();}}
                     buttonStyle={[styles.button, { backgroundColor: purple }]}
                 />
                 <Button
@@ -103,7 +108,7 @@ const CardView = (props) => {
                     title="Incorrect"
                     raised
                     titleStyle={styles.buttonTitle}
-                    onPress={() => props.goToNextQuestion('incorrect')}
+                    onPress={() => {props.goToNextQuestion('incorrect'); restoreDefaultFlipCardState();}}
                     buttonStyle={[styles.button, { backgroundColor: standardPurple }]}
                 />
             </View>

@@ -11,6 +11,10 @@
     "notification": {
       "icon": "./src/image/mbfcards.png"
     },
+    "splash": {
+      "image": "./src/image/splashscreen3MODWithText.png",
+      "resizeMode": "contain"
+    },
     "ios": {
       "bundleIdentifier": "org.myflashcards.exp"
     },

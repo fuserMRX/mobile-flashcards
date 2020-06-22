@@ -29,6 +29,8 @@ const QuizResults = (props) => {
                     style={styles.image}
                     PlaceholderContent={<ActivityIndicator size="large" color={purple} />}
                 />
+            </View>
+            <View style={styles.contentText}>
                 <Text style={styles.text}>Your score is {scoreResult}% </Text>
                 <Text style={styles.text}>({props.correctNumber} correct of {props.correctNumber + props.incorrectNumber} in general)</Text>
             </View>
@@ -60,6 +62,11 @@ const QuizResults = (props) => {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    contentText: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
