@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React Native App](https://github.com/expo/create-react-native-app).
 
+## mobile React-Redux native app that lets anyone memorize important information via a question-and-answer format.
+
 ## Available Scripts
 
 To install project please run:
